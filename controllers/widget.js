@@ -12,17 +12,21 @@ var font = args.font || {};
 font.fontFamily = 'FontAwesome';
 $.iconLabel.font = font;
 
-var text = args.text || '';
-text = text.replace(/fa-[a-z-]+/g, function (match)
-{
-    if (!_.isNull(charcode[match]) && !_.isUndefined(charcode[match]))
-    {
-        return String.fromCharCode(charcode[match]);
-    }
+var text = args.text || '',
+	makeText = function (text) {
+		text = text.replace(/fa-[a-z-]+/g, function (match)
+		{
+			if (!_.isNull(charcode[match]) && !_.isUndefined(charcode[match]))
+		    {
+			    return String.fromCharCode(charcode[match]);
+		    }
 
-    return match;
-});
-$.iconLabel.text = text;
+		    return match;
+		});
+		$.iconLabel.text = text;
+	};
+exports.update = makeText;
+makeText(text);
 
 // classes fix for Android
 if (OS_ANDROID) {
